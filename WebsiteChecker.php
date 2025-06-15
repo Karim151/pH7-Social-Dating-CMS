@@ -1,89 +1,63 @@
 <?php
 /**
- * @author         Pierre-Henry Soria <hello@ph7cms.com>
- * @copyright      (c) 2018-2021, Pierre-Henry Soria. All Rights Reserved.
- * @license        See PH7.LICENSE.txt and PH7.COPYRIGHT.txt in the root directory.
- * @link           https://ph7cms.com
- * @package        PH7 / ROOT
+ * Environment Compatibility Checker
+ * Validates server requirements and configuration status
  */
 
-namespace PH7;
+namespace App\Core;
 
-defined('PH7') or exit(header('Location: ./'));
-
-use RuntimeException;
-
-class WebsiteChecker
+class EnvChecker
 {
-    const REQUIRED_SERVER_VERSION = '5.6.0';
-    const REQUIRED_CONFIG_FILE_NAME = '_constants.php';
-    const INSTALL_FOLDER_NAME = '_install/';
+    const MIN_PHP_VERSION = '7.4.0';
+    const CONFIG_FILE = '_constants.php';
+    const INSTALL_DIR = '_install/';
 
-    const PHP_VERSION_ERROR_MESSAGE = 'ERROR: Your current PHP version is %s. pH7CMS requires PHP %s or newer.<br /> Please ask your Web host to upgrade PHP to %s or newer.';
-    const NO_CONFIG_FOUND_ERROR_MESSAGE = 'CONFIG FILE NOT FOUND! If you want to make a new installation, please re-upload _install/ folder and clear your database.';
+    const PHP_VERSION_ERROR = 'Your server is running PHP %s. This application requires PHP %s or newer.<br>Please contact your hosting provider to upgrade your PHP version.';
+    const MISSING_CONFIG_ERROR = 'Configuration file not found. For new installations, ensure the install directory is present and your database is ready.';
 
-    /**
-     * @throws RuntimeException
-     */
-    public function checkPhpVersion()
+    public function verifyPhpVersion(): void
     {
-        if ($this->isIncompatiblePhpVersion()) {
-            throw new RuntimeException(
+        if ($this->isUnsupportedPhpVersion()) {
+            throw new \RuntimeException(
                 sprintf(
-                    self::PHP_VERSION_ERROR_MESSAGE,
+                    self::PHP_VERSION_ERROR,
                     PHP_VERSION,
-                    self::REQUIRED_SERVER_VERSION,
-                    self::REQUIRED_SERVER_VERSION
+                    self::MIN_PHP_VERSION
                 )
             );
         }
     }
 
-    /**
-     * Clear redirection cache since some folks get it cached.
-     *
-     * @return void
-     */
-    public function clearBrowserCache()
+    public function clearBrowserCache(): void
     {
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Pragma: no-cache');
+        header('Expires: ' . gmdate('D, d M Y H:i:s', 0) . ' GMT');
     }
 
-    public function moveToInstaller()
+    public function redirectToInstaller(): void
     {
-        header('Location: ' . self::INSTALL_FOLDER_NAME);
+        header('Location: ' . self::INSTALL_DIR, true, 302);
+        exit;
     }
 
-    /**
-     * @return bool
-     */
-    public function doesConfigFileExist()
+    public function isConfigExists(): bool
     {
-        return is_file(__DIR__ . '/' . self::REQUIRED_CONFIG_FILE_NAME);
+        return is_file(__DIR__ . '/' . self::CONFIG_FILE);
     }
 
-    /**
-     * @return string
-     */
-    public function getNoConfigFoundMessage()
+    public function isInstallerAvailable(): bool
     {
-        return self::NO_CONFIG_FOUND_ERROR_MESSAGE;
+        return is_dir(__DIR__ . '/' . self::INSTALL_DIR);
     }
 
-    /**
-     * @return bool
-     */
-    public function doesInstallFolderExist()
+    public function getConfigMissingMessage(): string
     {
-        return is_dir(__DIR__ . '/' . self::INSTALL_FOLDER_NAME);
+        return self::MISSING_CONFIG_ERROR;
     }
 
-    /**
-     * @return bool
-     */
-    private function isIncompatiblePhpVersion()
+    private function isUnsupportedPhpVersion(): bool
     {
-        return version_compare(PHP_VERSION, self::REQUIRED_SERVER_VERSION, '<');
+        return version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<');
     }
 }
