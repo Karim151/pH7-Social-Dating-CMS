@@ -1,33 +1,25 @@
 <?php
 /**
- * @title          Index
- * @desc           Index file for the public root.
- *
- * @author         Pierre-Henry Soria <hello@ph7cms.com>
- * @copyright      (c) 2011-2021, Pierre-Henry Soria. All Rights Reserved.
- * @license        See PH7.LICENSE.txt and PH7.COPYRIGHT.txt in the root directory.
- * @link           https://ph7cms.com
- * @package        PH7 / ROOT
+ * @title          Core Entry Point
+ * @desc           Main entry file for the application.
  */
 
-namespace PH7;
-
-define('PH7', 1);
+define('APP_CORE', 1);
 
 use RuntimeException;
 
-require __DIR__ . '/WebsiteChecker.php';
+require __DIR__ . '/EnvChecker.php';
 
-$oSiteChecker = new WebsiteChecker();
+$oEnvChecker = new EnvChecker();
 
 try {
-    $oSiteChecker->checkPhpVersion();
-    if (!$oSiteChecker->doesConfigFileExist()) {
-        if ($oSiteChecker->doesInstallFolderExist()) {
-            $oSiteChecker->clearBrowserCache();
-            $oSiteChecker->moveToInstaller();
+    $oEnvChecker->verifyPhpVersion();
+    if (!$oEnvChecker->isConfigExists()) {
+        if ($oEnvChecker->isInstallerAvailable()) {
+            $oEnvChecker->clearBrowserCache();
+            $oEnvChecker->redirectToInstaller();
         } else {
-            echo $oSiteChecker->getNoConfigFoundMessage();
+            echo $oEnvChecker->getConfigMissingMessage();
         }
         exit;
     }
@@ -37,11 +29,11 @@ try {
 }
 
 require __DIR__ . '/_constants.php';
-require PH7_PATH_APP . 'Bootstrap.php';
+require APP_PATH . 'CoreLoader.php';
 
-$oApp = Bootstrap::getInstance();
-$oApp->setTimezoneIfNotSet();
+$oApp = CoreLoader::init();
+$oApp->configureTimezone();
 
 ob_start();
-$oApp->run();
+$oApp->launch();
 ob_end_flush();
