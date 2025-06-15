@@ -1,1 +1,570 @@
-@import url([$url_def_tpl_css]style.css);
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أسلوب عصري وقوي</title>
+    <style>
+        /* Reset وتصحيح أساسي */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* الألوان الأساسية */
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #e5383b;
+            
+            /* الظلال */
+            --shadow-sm: 0 2px 5px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 10px rgba(0,0,0,0.15);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2);
+            
+            /* التدوير */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            
+            /* الانتقالات */
+            --transition: all 0.3s ease;
+        }
+
+        /* الطباعة الأساسية */
+        body {
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f0f2f5;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+
+        /* الطباعة */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.5rem; }
+        h5 { font-size: 1.25rem; }
+        h6 { font-size: 1rem; }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* التخطيط */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        /* الأزرار */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5e0b9c;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* البطاقات */
+        .card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* التنقل */
+        .navbar {
+            background: white;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* الأقسام */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+        }
+
+        /* البطاقة المميزة */
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .feature-icon svg {
+            width: 36px;
+            height: 36px;
+            fill: var(--primary);
+        }
+
+        /* الشريط البطولي */
+        .hero {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        /* التذييل */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #6c757d;
+        }
+
+        /* متجاوب */
+        @media (max-width: 992px) {
+            .grid-cols-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-cols-2, 
+            .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">لوغو</a>
+            <div class="nav-links">
+                <a href="#" class="nav-link">الرئيسية</a>
+                <a href="#" class="nav-link">الخدمات</a>
+                <a href="#" class="nav-link">المشاريع</a>
+                <a href="#" class="nav-link">عنّا</a>
+                <a href="#" class="nav-link">اتصل بنا</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- الشريط البطولي -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">تصميم عصري وقوي لموقعك</h1>
+            <p class="hero-subtitle">أسلوب حديث متجاوب مع جميع الأجهزة، مصمم بأحدث تقنيات CSS3 ليعطي موقعك مظهراً احترافياً</p>
+            <div class="flex justify-center gap-4">
+                <button class="btn btn-primary">ابدأ الآن</button>
+                <button class="btn btn-outline">اعرف المزيد</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- الميزات -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">الميزات الرئيسية</h2>
+            <div class="grid grid-cols-3">
+                <!-- بطاقة ميزة -->
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">تصميم عصري</h3>
+                    <p>أحدث اتجاهات التصميم مع ظروف ناعمة وانتقالات سلسة تعطي موقعك مظهراً احترافياً.</p>
+                </div>
+                
+                <!-- بطاقة ميزة -->
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">متجاوب مع الجوال</h3>
+                    <p>تصميم يتكيف مع جميع أحجام الشاشات من الهواتف الذكية إلى أجهزة الكمبيوتر المكتبية.</p>
+                </div>
+                
+                <!-- بطاقة ميزة -->
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">آمن وحماية</h3>
+                    <p>أفضل ممارسات الأمان لحماية موقعك وبيانات مستخدميك من التهديدات المحتملة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- المشاريع -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">أعمالنا الأخيرة</h2>
+            <div class="grid grid-cols-3">
+                <!-- بطاقة مشروع -->
+                <div class="card">
+                    <img src="https://via.placeholder.com/600x400" alt="Project" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">تصميم متجر إلكتروني</h3>
+                        <p>تصميم متجر إلكتروني متكامل مع نظام دفع آمن وتجربة مستخدم مميزة.</p>
+                    </div>
+                </div>
+                
+                <!-- بطاقة مشروع -->
+                <div class="card">
+                    <img src="https://via.placeholder.com/600x400" alt="Project" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">تطبيق جوال</h3>
+                        <p>تصميم واجهة مستخدم لتطبيق جوال مع التركيز على البساطة والوظيفية.</p>
+                    </div>
+                </div>
+                
+                <!-- بطاقة مشروع -->
+                <div class="card">
+                    <img src="https://via.placeholder.com/600x400" alt="Project" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">موقع مؤسسة</h3>
+                        <p>تصميم موقع احترافي لمؤسسة تعليمية مع نظام إدارة محتوى متكامل.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <div>
+                    <a href="#" class="footer-logo">لوغو</a>
+                    <p>نقدم حلولاً تصميمية وتقنية عصرية لتعزيز حضورك الرقمي وتحقيق أهدافك.</p>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">الخدمات</a></li>
+                        <li><a href="#">المشاريع</a></li>
+                        <li><a href="#">عنّا</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">خدماتنا</h4>
+                    <ul>
+                        <li><a href="#">تصميم المواقع</a></li>
+                        <li><a href="#">تطبيقات الجوال</a></li>
+                        <li><a href="#">التسويق الرقمي</a></li>
+                        <li><a href="#">استضافة المواقع</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">اتصل بنا</h4>
+                    <ul>
+                        <li>الرياض، المملكة العربية السعودية</li>
+                        <li>الهاتف: +966 123 456 789</li>
+                        <li>البريد: info@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 جميع الحقوق محفوظة. تم التصميم والتطوير بأحدث التقنيات.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // إضافة تأثيرات تفاعلية بسيطة
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة تأثير للمواقع عند التمرير
+            const cards = document.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+            
+            // تغيير لون شريط التنقل عند التمرير
+            const navbar = document.querySelector('.navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.style.backgroundColor = 'white';
+                    navbar.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                } else {
+                    navbar.style.backgroundColor = 'white';
+                    navbar.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
